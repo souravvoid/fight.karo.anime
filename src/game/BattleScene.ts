@@ -100,7 +100,7 @@ export class BattleScene extends Phaser.Scene {
       onHit: (attacker, defender, def, blocked, damage) => this.registerHit(attacker, defender, def, blocked, damage),
     };
 
-    this.player = new Fighter(this, FIGHTERS[this.config.playerId], {
+    this.player = new Fighter(FIGHTERS[this.config.playerId], {
       x: 430,
       facing: 1,
       floorY: this.floorY,
@@ -108,7 +108,7 @@ export class BattleScene extends Phaser.Scene {
       isPlayer: true,
       hooks,
     });
-    this.cpu = new Fighter(this, FIGHTERS[this.config.cpuId], {
+    this.cpu = new Fighter(FIGHTERS[this.config.cpuId], {
       x: 850,
       facing: -1,
       floorY: this.floorY,

@@ -1,8 +1,8 @@
-import Phaser from "phaser";
 import type { AttackDef, AttackId, FighterDef } from "../types/game";
 import { maxHealthFor, powerScaleFor, walkSpeedFor } from "../data/fighters";
 import { blankInput, type InputState } from "../services/bus";
 import type { FighterState } from "./states";
+import { boxesOverlap, clamp } from "./geometry";
 
 export interface Hurtbox {
   x: number;
@@ -35,7 +35,6 @@ const STUN_HIT = 300;
 
 export class Fighter {
   readonly def: FighterDef;
-  readonly scene: Phaser.Scene;
   readonly isPlayer: boolean;
   readonly hooks: FighterHooks;
 
@@ -64,11 +63,9 @@ export class Fighter {
   private hasLanded = true;
 
   constructor(
-    scene: Phaser.Scene,
     def: FighterDef,
     opts: { x: number; facing: 1 | -1; floorY: number; bounds: [number, number]; isPlayer: boolean; hooks: FighterHooks },
   ) {
-    this.scene = scene;
     this.def = def;
     this.maxHp = maxHealthFor(def);
     this.hp = this.maxHp;
@@ -195,7 +192,7 @@ export class Fighter {
     if (!this.grounded) {
       const dir = input.left ? -1 : input.right ? 1 : 0;
       this.vx += dir * 260 * dt;
-      this.vx = Phaser.Math.Clamp(this.vx, -this.walkSpeed * 0.95, this.walkSpeed * 0.95);
+      this.vx = clamp(this.vx, -this.walkSpeed * 0.95, this.walkSpeed * 0.95);
     }
 
     const awayHeld = this.facing === 1 ? input.left : input.right;
@@ -334,9 +331,9 @@ export class Fighter {
       if (this.canHitNow(a)) {
         const hit = this.hitboxFor(def);
         const target = opponent.hurtbox();
-        const intersects = Phaser.Geom.Intersects.RectangleToRectangle(
-          new Phaser.Geom.Rectangle(hit.x - hit.w / 2, hit.y - hit.h / 2, hit.w, hit.h),
-          new Phaser.Geom.Rectangle(target.x - target.w / 2, target.y - target.h / 2, target.w, target.h),
+        const intersects = boxesOverlap(
+          { x: hit.x - hit.w / 2, y: hit.y - hit.h / 2, w: hit.w, h: hit.h },
+          { x: target.x - target.w / 2, y: target.y - target.h / 2, w: target.w, h: target.h },
         );
         if (intersects) {
           a.lastHitAt = a.elapsed;
@@ -451,7 +448,7 @@ export class Fighter {
         if (this.state === "jump") this.setState("idle");
       }
     }
-    this.x = Phaser.Math.Clamp(this.x, this.bounds[0], this.bounds[1]);
+    this.x = clamp(this.x, this.bounds[0], this.bounds[1]);
     if (this.x <= this.bounds[0] + 1 || this.x >= this.bounds[1] - 1) this.vx = 0;
   }
 
@@ -464,8 +461,8 @@ export class Fighter {
       a.x -= dir * overlap;
       b.x += dir * overlap;
       const [lo, hi] = a.boundsForPush;
-      a.x = Phaser.Math.Clamp(a.x, lo, hi);
-      b.x = Phaser.Math.Clamp(b.x, lo, hi);
+      a.x = clamp(a.x, lo, hi);
+      b.x = clamp(b.x, lo, hi);
     }
   }
 

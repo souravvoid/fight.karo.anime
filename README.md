@@ -35,6 +35,7 @@ npm install
 npm run dev      # http://localhost:5173
 npm run build    # typecheck + production bundle in dist/
 npm run preview  # serve the production build
+npm test         # headless combat rules checks
 ```
 
 ## Controls
