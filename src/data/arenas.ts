@@ -8,8 +8,8 @@ export const ARENAS: Record<ArenaId, ArenaDef> = {
     description: "A shrine courtyard above the valley. Lanterns burn, petals drift, and the floor remembers every duel.",
     floorY: 596,
     bounds: [120, 1160],
-    sky: ["#0A1024", "#1A2440"],
-    accent: "#40B9FF",
+    sky: ["#120806", "#331509"],
+    accent: "#FF7A1A",
   },
   capital: {
     id: "capital",
@@ -18,8 +18,8 @@ export const ARENAS: Record<ArenaId, ArenaDef> = {
     description: "The old city broke its own skyline. Embers still climb from the crater where the tower used to stand.",
     floorY: 592,
     bounds: [120, 1160],
-    sky: ["#170B1E", "#3A1226"],
-    accent: "#FF8A3D",
+    sky: ["#1A0A06", "#3D130C"],
+    accent: "#FF6A13",
   },
 };
 

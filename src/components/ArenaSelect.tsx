@@ -17,15 +17,15 @@ function DojoPreview() {
     <svg viewBox="0 0 320 150" className="arena-preview" aria-hidden>
       <defs>
         <linearGradient id="dojo-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#0A1024" />
-          <stop offset="100%" stopColor="#1A2440" />
+          <stop offset="0%" stopColor="#120806" />
+          <stop offset="100%" stopColor="#331509" />
         </linearGradient>
       </defs>
       <rect width="320" height="150" fill="url(#dojo-sky)" />
-      <circle cx="252" cy="38" r="24" fill="#E8F1FF" opacity="0.92" />
-      <circle cx="252" cy="38" r="38" fill="#E8F1FF" opacity="0.08" />
-      <path d="M0 118 L46 86 L92 108 L140 80 L196 110 L246 88 L320 116 L320 150 L0 150 Z" fill="#0E1526" />
-      <g fill="#090C16">
+      <circle cx="252" cy="38" r="24" fill="#FFF1D6" opacity="0.92" />
+      <circle cx="252" cy="38" r="38" fill="#FFF1D6" opacity="0.08" />
+      <path d="M0 118 L46 86 L92 108 L140 80 L196 110 L246 88 L320 116 L320 150 L0 150 Z" fill="#1C0D08" />
+      <g fill="#140A06">
         <rect x="122" y="66" width="10" height="60" />
         <rect x="188" y="66" width="10" height="60" />
         <rect x="112" y="60" width="96" height="7" />
@@ -33,8 +33,8 @@ function DojoPreview() {
       </g>
       <circle cx="92" cy="72" r="5" fill="#FFD9A0" opacity="0.9" />
       <circle cx="228" cy="80" r="5" fill="#FFD9A0" opacity="0.9" />
-      <rect y="126" width="320" height="24" fill="#161022" />
-      <rect y="126" width="320" height="2" fill="#40B9FF" opacity="0.4" />
+      <rect y="126" width="320" height="24" fill="#1A0F0A" />
+      <rect y="126" width="320" height="2" fill="#FF7A1A" opacity="0.4" />
     </svg>
   );
 }
@@ -44,14 +44,14 @@ function CapitalPreview() {
     <svg viewBox="0 0 320 150" className="arena-preview" aria-hidden>
       <defs>
         <linearGradient id="cap-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#170B1E" />
-          <stop offset="100%" stopColor="#3A1226" />
+          <stop offset="0%" stopColor="#1A0A06" />
+          <stop offset="100%" stopColor="#3D130C" />
         </linearGradient>
       </defs>
       <rect width="320" height="150" fill="url(#cap-sky)" />
       <circle cx="72" cy="34" r="18" fill="#FFD7B0" opacity="0.85" />
-      <circle cx="82" cy="28" r="15" fill="#170B1E" />
-      <g fill="#120A16">
+      <circle cx="82" cy="28" r="15" fill="#1A0A06" />
+      <g fill="#150A06">
         <rect x="0" y="74" width="44" height="54" />
         <rect x="48" y="56" width="34" height="72" />
         <rect x="86" y="84" width="40" height="44" />
@@ -61,16 +61,16 @@ function CapitalPreview() {
         <rect x="256" y="78" width="30" height="50" />
         <rect x="290" y="60" width="30" height="68" />
       </g>
-      <g fill="#FF8A3D" opacity="0.6">
+      <g fill="#FF6A13" opacity="0.6">
         <rect x="56" y="66" width="6" height="8" />
         <rect x="138" y="58" width="6" height="8" />
         <rect x="214" y="66" width="6" height="8" />
         <rect x="222" y="94" width="6" height="8" />
       </g>
-      <rect y="126" width="320" height="24" fill="#140B18" />
-      <rect y="126" width="320" height="2" fill="#FF8A3D" opacity="0.45" />
+      <rect y="126" width="320" height="24" fill="#180C08" />
+      <rect y="126" width="320" height="2" fill="#FF6A13" opacity="0.45" />
       <circle cx="150" cy="120" r="2" fill="#FFC26B" opacity="0.9" />
-      <circle cx="262" cy="112" r="1.6" fill="#FF8A3D" opacity="0.9" />
+      <circle cx="262" cy="112" r="1.6" fill="#FF6A13" opacity="0.9" />
     </svg>
   );
 }

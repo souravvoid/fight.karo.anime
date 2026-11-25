@@ -52,30 +52,30 @@ export function buildArena(scene: Phaser.Scene, arena: ArenaDef): ArenaView {
   if (arena.id === "dojo") {
     skyGradient(farG, hex(arena.sky[0]), hex(arena.sky[1]), floorY, 30);
     // stars
-    farG.fillStyle(0xdfe9ff, 0.7);
+    farG.fillStyle(0xffe9c8, 0.7);
     for (let i = 0; i < 90; i += 1) {
       const x = (i * 173.7) % WORLD_WIDTH;
       const y = ((i * 91.3) % 340) + 10;
       farG.fillCircle(x, y, i % 7 === 0 ? 1.6 : 1);
     }
     // moon with halo
-    farG.fillStyle(0x9fb6d9, 0.08);
+    farG.fillStyle(0xf5b544, 0.08);
     farG.fillCircle(1010, 150, 132);
-    farG.fillStyle(0xc9dcf7, 0.1);
+    farG.fillStyle(0xffc978, 0.1);
     farG.fillCircle(1010, 150, 104);
-    farG.fillStyle(0xe8f1ff, 0.92);
+    farG.fillStyle(0xfff1d6, 0.92);
     farG.fillCircle(1010, 150, 76);
-    farG.fillStyle(0xbfd3ec, 0.5);
+    farG.fillStyle(0xf0d0a8, 0.5);
     farG.fillCircle(988, 132, 13);
     farG.fillCircle(1032, 168, 18);
     farG.fillCircle(1002, 182, 9);
     // clouds
-    farG.fillStyle(0x16203a, 0.85);
+    farG.fillStyle(0x2a1209, 0.85);
     farG.fillEllipse(300, 200, 520, 54);
     farG.fillEllipse(880, 250, 640, 44);
     farG.fillEllipse(640, 160, 420, 30);
     // mountains
-    farG.fillStyle(0x0e1526, 1);
+    farG.fillStyle(0x1c0d08, 1);
     farG.fillPoints(
       [
         { x: -20, y: floorY },
@@ -91,7 +91,7 @@ export function buildArena(scene: Phaser.Scene, arena: ArenaDef): ArenaView {
       ],
       true,
     );
-    farG.fillStyle(0x131c30, 0.9);
+    farG.fillStyle(0x26130b, 0.9);
     farG.fillPoints(
       [
         { x: -20, y: floorY },
@@ -107,7 +107,7 @@ export function buildArena(scene: Phaser.Scene, arena: ArenaDef): ArenaView {
     );
 
     // distant pagoda
-    midG.fillStyle(0x080b14, 1);
+    midG.fillStyle(0x120804, 1);
     for (let tier = 0; tier < 5; tier += 1) {
       const w = 150 - tier * 20;
       const y = 470 - tier * 46;
@@ -117,7 +117,7 @@ export function buildArena(scene: Phaser.Scene, arena: ArenaDef): ArenaView {
     midG.fillRect(144, 300, 12, 60);
 
     // torii gate
-    const toriiCol = 0x090c16;
+    const toriiCol = 0x140a06;
     midG.fillStyle(toriiCol, 1);
     midG.fillRect(500, 300, 32, floorY - 300);
     midG.fillRect(748, 300, 32, floorY - 300);
@@ -129,7 +129,7 @@ export function buildArena(scene: Phaser.Scene, arena: ArenaDef): ArenaView {
     midG.fillRect(628, 280, 44, 26);
     // stone lanterns
     for (const lx of [380, 900]) {
-      midG.fillStyle(0x0b101c, 1);
+      midG.fillStyle(0x1a0e08, 1);
       midG.fillRect(lx - 6, 520, 12, floorY - 520);
       midG.fillRect(lx - 18, 500, 36, 14);
       midG.fillStyle(0xffd9a0, 0.9);
@@ -140,9 +140,9 @@ export function buildArena(scene: Phaser.Scene, arena: ArenaDef): ArenaView {
     // bamboo on the right
     for (let i = 0; i < 9; i += 1) {
       const bx = 1140 + i * 17;
-      midG.fillStyle(0x0a1420, 1);
+      midG.fillStyle(0x1a0f08, 1);
       midG.fillRect(bx, 250 - (i % 4) * 30, 6, floorY - 250);
-      midG.fillStyle(0x0f1d2b, 1);
+      midG.fillStyle(0x24160c, 1);
       for (let j = 0; j < 4; j += 1) {
         midG.fillEllipse(bx + (j % 2 === 0 ? -22 : 22), 300 + j * 62 - i * 12, 44, 10);
       }
@@ -152,30 +152,30 @@ export function buildArena(scene: Phaser.Scene, arena: ArenaDef): ArenaView {
     for (let i = 0; i < 5; i += 1) {
       const lx = 220 + i * 210;
       const ly = 80 + (i % 2) * 26;
-      midG.fillStyle(0x0b101c, 1);
+      midG.fillStyle(0x1a0e08, 1);
       midG.fillRect(lx - 1, 0, 2, ly - 12);
       midG.fillStyle(0xd9475b, 0.95);
       midG.fillEllipse(lx, ly, 30, 38);
       midG.fillStyle(0xffd9a0, 0.25);
       midG.fillEllipse(lx, ly, 42, 50);
-      midG.fillStyle(0x2a0a12, 1);
+      midG.fillStyle(0x2a0a06, 1);
       midG.fillRect(lx - 8, ly - 22, 16, 4);
       midG.fillRect(lx - 8, ly + 18, 16, 4);
     }
 
     // floor
-    floorG.fillStyle(0x161022, 1);
+    floorG.fillStyle(0x1a0f0a, 1);
     floorG.fillRect(0, floorY, WORLD_WIDTH, WORLD_HEIGHT - floorY);
-    floorG.fillStyle(0x1e1730, 1);
+    floorG.fillStyle(0x241610, 1);
     floorG.fillRect(0, floorY, WORLD_WIDTH, 10);
-    floorG.lineStyle(1, 0x2c2240, 0.8);
+    floorG.lineStyle(1, 0x33200f, 0.8);
     for (let i = 0; i < 18; i += 1) {
       const x = i * 76;
       floorG.lineBetween(x, floorY + 10, x - 40, WORLD_HEIGHT);
     }
     for (let i = 0; i < 5; i += 1) {
       const y = floorY + 14 + i * i * 6;
-      floorG.lineStyle(1, 0x2c2240, 0.5);
+      floorG.lineStyle(1, 0x33200f, 0.5);
       floorG.lineBetween(0, y, WORLD_WIDTH, y);
     }
     floorG.fillStyle(accent, 0.18);
@@ -215,7 +215,7 @@ export function buildArena(scene: Phaser.Scene, arena: ArenaDef): ArenaView {
     farG.fillStyle(hex(arena.sky[0]), 1);
     farG.fillCircle(330, 128, 58);
     // smoke bands
-    farG.fillStyle(0x1c0d1c, 0.55);
+    farG.fillStyle(0x1f0f0a, 0.55);
     farG.fillEllipse(520, 250, 760, 70);
     farG.fillEllipse(900, 210, 620, 52);
 
@@ -234,7 +234,7 @@ export function buildArena(scene: Phaser.Scene, arena: ArenaDef): ArenaView {
     ];
     for (const b of buildings) {
       const top = floorY - b.h;
-      farG.fillStyle(0x120a16, 1);
+      farG.fillStyle(0x150a06, 1);
       farG.fillRect(b.x, top, b.w, b.h);
       // broken top edge
       farG.fillStyle(hex(arena.sky[1]), 1);
@@ -244,7 +244,7 @@ export function buildArena(scene: Phaser.Scene, arena: ArenaDef): ArenaView {
       for (let wy = top + 26; wy < floorY - 30; wy += 34) {
         for (let wx = b.x + 14; wx < b.x + b.w - 16; wx += 26) {
           if ((wx * 7 + wy * 13) % 11 < 3) {
-            farG.fillStyle((wx + wy) % 5 === 0 ? 0x9b5cff : 0xff8a3d, 0.55);
+            farG.fillStyle((wx + wy) % 5 === 0 ? 0xf5b544 : 0xff8a3d, 0.55);
             farG.fillRect(wx, wy, 12, 16);
           }
         }
@@ -254,39 +254,39 @@ export function buildArena(scene: Phaser.Scene, arena: ArenaDef): ArenaView {
     farG.save();
     farG.translateCanvas(640, floorY - 420);
     farG.rotateCanvas(0.07);
-    farG.fillStyle(0x1a0f22, 1);
+    farG.fillStyle(0x1c0f0a, 1);
     farG.fillRect(-46, 0, 92, 420);
-    farG.fillStyle(0x0f0814, 1);
+    farG.fillStyle(0x100705, 1);
     farG.fillTriangle(-46, 0, 46, 0, -10, -90);
     farG.fillStyle(0xff8a3d, 0.16);
     for (let i = 0; i < 6; i += 1) farG.fillRect(-30 + (i % 2) * 26, 40 + i * 58, 14, 22);
     farG.restore();
 
     // foreground ruins
-    midG.fillStyle(0x140c1a, 1);
+    midG.fillStyle(0x180d08, 1);
     midG.fillRect(60, 430, 44, floorY - 430);
     midG.fillRect(70, 410, 24, 24);
     midG.fillRect(1170, 400, 50, floorY - 400);
-    midG.fillStyle(0x1d1124, 1);
+    midG.fillStyle(0x23130c, 1);
     midG.fillTriangle(1170, 400, 1220, 400, 1200, 366);
     // rebar
-    midG.lineStyle(3, 0x2a1a30, 1);
+    midG.lineStyle(3, 0x33200f, 1);
     midG.lineBetween(80, 410, 60, 340);
     midG.lineBetween(88, 410, 96, 352);
     midG.lineBetween(1194, 400, 1180, 330);
     // rubble
-    midG.fillStyle(0x180f1f, 1);
+    midG.fillStyle(0x1c100a, 1);
     midG.fillCircle(180, floorY - 6, 26);
     midG.fillCircle(214, floorY - 2, 16);
     midG.fillCircle(1090, floorY - 4, 22);
     midG.fillCircle(1060, floorY, 14);
 
     // cracked asphalt floor
-    floorG.fillStyle(0x140b18, 1);
+    floorG.fillStyle(0x180c08, 1);
     floorG.fillRect(0, floorY, WORLD_WIDTH, WORLD_HEIGHT - floorY);
-    floorG.fillStyle(0x1d1224, 1);
+    floorG.fillStyle(0x23130c, 1);
     floorG.fillRect(0, floorY, WORLD_WIDTH, 12);
-    floorG.lineStyle(2, 0x0a050e, 0.9);
+    floorG.lineStyle(2, 0x0a0503, 0.9);
     const cracks: [number, number, number, number][] = [
       [0, floorY + 12, 180, 700],
       [190, floorY + 6, 300, 720],
