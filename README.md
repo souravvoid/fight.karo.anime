@@ -2,7 +2,7 @@
 
 An original 2D anime-inspired browser fighting game. Four fighters, two arenas, best-of-three rounds against a CPU opponent — built with React, TypeScript, Vite and Phaser 3.
 
-**Play:** _deployment link goes here_
+**Play:** https://anime-clash-crossover-arena.embarko.app/
 
 ## Stack
 
