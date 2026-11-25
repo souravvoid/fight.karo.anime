@@ -148,6 +148,21 @@ try {
     assert.ok(a.x <= BOUNDS[1], `x=${a.x}`);
   });
 
+  check("grab has a cooldown", () => {
+    const { a, b } = makeFighters("kaze", "helios");
+    run(a, b, 2, (i) => ({ ...idle(), grab: i < 2 }));
+    assert.ok(a.attack !== null, "grab should start");
+
+    // Attack animation finishes at ~460ms, but the throw cooldown runs to 600ms.
+    run(a, b, 28, () => idle());
+    run(a, b, 2, (i) => ({ ...idle(), grab: i < 2 }));
+    assert.equal(a.attack, null, "grab re-fired during cooldown");
+
+    run(a, b, 12, () => idle());
+    run(a, b, 2, (i) => ({ ...idle(), grab: i < 2 }));
+    assert.ok(a.attack !== null, "grab should be available after cooldown");
+  });
+
   check("round reset restores health, meter and position", () => {
     const { a, b } = makeFighters("kaze", "helios");
     a.hp = 12;

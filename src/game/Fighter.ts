@@ -55,6 +55,7 @@ export class Fighter {
   attack: AttackInstance | null = null;
   stunUntil = 0;
   private cooldowns: Partial<Record<AttackId, number>> = {};
+  private grabReadyAt = 0;
   private prevInput: InputState = blankInput();
   private pressBuffer: Partial<Record<keyof InputState, number>> = {};
   private now = 0;
@@ -120,6 +121,7 @@ export class Fighter {
     this.attack = null;
     this.stunUntil = 0;
     this.cooldowns = {};
+    this.grabReadyAt = 0;
     this.prevInput = blankInput();
     this.pressBuffer = {};
     this.hasLanded = true;
@@ -261,7 +263,7 @@ export class Fighter {
       this.startAttack("kick");
       return;
     }
-    if (this.peek("grab")) {
+    if (this.peek("grab") && this.now >= this.grabReadyAt) {
       this.consume("grab");
       this.startAttack("grab");
     }
@@ -297,7 +299,8 @@ export class Fighter {
     const def = id === "grab" ? this.grabDef() : this.def.attacks[id];
     if (def.energyCost > 0 && this.energy < def.energyCost) return;
     this.energy = Math.max(0, this.energy - def.energyCost);
-    if (id !== "grab") this.cooldowns[id] = def.cooldown;
+    if (id === "grab") this.grabReadyAt = this.now + def.cooldown;
+    else this.cooldowns[id] = def.cooldown;
 
     this.attack = { def, elapsed: 0, hitIndex: 0, lastHitAt: -999, fired: false, whiffed: false };
     this.setState("attack");
