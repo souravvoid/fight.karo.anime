@@ -1,0 +1,26 @@
+{
+  "name": "anime-clash-crossover-arena",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "ANIME CLASH: CROSSOVER ARENA — an original 2D anime-inspired browser fighting game built with Phaser 3 + React.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit false --pretty"
+  },
+  "dependencies": {
+    "lucide-react": "^1.80.0",
+    "phaser": "3.90.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.8"
+  }
+}
