@@ -163,6 +163,38 @@ try {
     assert.ok(a.attack !== null, "grab should be available after cooldown");
   });
 
+  check("every fighter has a complete, valid move set", () => {
+    const ids = Object.keys(FIGHTERS);
+    assert.equal(ids.length, 7, `expected 7 fighters, got ${ids.length}`);
+    for (const id of ids) {
+      const def = FIGHTERS[id];
+      for (const move of ["punch", "kick", "special", "super"]) {
+        const a = def.attacks[move];
+        assert.ok(a, `${id} is missing ${move}`);
+        assert.ok(a.startup > 0 && a.active > 0 && a.recovery > 0, `${id}.${move} has invalid timing`);
+        assert.ok(a.damage > 0, `${id}.${move} has no damage`);
+        assert.ok(a.reach > 0 && a.w > 0 && a.h > 0, `${id}.${move} has an empty hitbox`);
+      }
+      assert.equal(def.attacks.super.energyCost, 100, `${id} super must cost a full meter`);
+    }
+  });
+
+  check("new fighters land their normals", () => {
+    for (const id of ["kai", "riko", "sango"]) {
+      const { a, b } = makeFighters(id, "helios");
+      run(a, b, 45, (i) => ({ ...idle(), punch: i < 2 }));
+      assert.ok(b.hp < b.maxHp, `${id} punch did not connect`);
+    }
+  });
+
+  check("new fighters land their signature specials", () => {
+    for (const id of ["riko", "sango"]) {
+      const { a, b } = makeFighters(id, "helios");
+      run(a, b, 70, (i) => ({ ...idle(), special: i < 2 }));
+      assert.ok(b.hp < b.maxHp, `${id} special did not connect`);
+    }
+  });
+
   check("round reset restores health, meter and position", () => {
     const { a, b } = makeFighters("kaze", "helios");
     a.hp = 12;

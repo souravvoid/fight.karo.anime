@@ -78,6 +78,37 @@ export function FighterPortrait({ def, size = 96, dim = false }: Props) {
           <path d="M67 42 C71 54 70 66 66 74 L60 72 C64 62 64 50 62 44 Z" fill={c.hair} opacity="0.95" />
         </>
       )}
+      {style === "short" && (
+        <>
+          <path d="M33 44 C31 27 40 22 50 22 C60 22 69 27 67 44 C63 34 57 31 50 31 C43 31 37 34 33 44 Z" fill={c.hair} />
+          <path d="M35 37 L43 31 L42 41 L50 32 L58 41 L57 31 L65 37 L63 43 L37 43 Z" fill={c.hair} opacity="0.92" />
+        </>
+      )}
+      {style === "tridents" && (
+        <path
+          d="M33 42 L26 12 L40 30 L44 8 L50 28 L56 8 L60 30 L74 12 L67 42 C62 32 56 30 50 30 C44 30 38 32 33 42 Z"
+          fill={c.hair}
+          stroke="rgba(0,0,0,0.3)"
+          strokeWidth="1"
+        />
+      )}
+
+      {/* accessories */}
+      {def.accessory === "headband" && (
+        <>
+          <rect x="35" y="35" width="30" height="4" rx="1" fill={c.accent} />
+          <path d="M35 37 L22 43 L26 50 L36 43 Z" fill={c.accent} opacity="0.8" />
+        </>
+      )}
+      {def.accessory === "goggles" && (
+        <>
+          <rect x="34" y="34" width="32" height="5" rx="2" fill="#141821" />
+          <circle cx="43" cy="36.5" r="5" fill={c.accent} opacity="0.92" />
+          <circle cx="57" cy="36.5" r="5" fill={c.accent} opacity="0.92" />
+          <circle cx="43" cy="36.5" r="2" fill="#ffffff" opacity="0.65" />
+          <circle cx="57" cy="36.5" r="2" fill="#ffffff" opacity="0.65" />
+        </>
+      )}
 
       {/* eyes */}
       <ellipse cx="44" cy="45" rx="2.6" ry="3.4" fill="#0b0b14" />

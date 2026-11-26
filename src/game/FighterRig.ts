@@ -205,6 +205,17 @@ export class FighterRig {
       hairG.fillCircle(0, -hr * 0.42, hr * 1.05);
       hairG.fillTriangle(-hr * 0.9, -hr * 0.7, -hr * 0.4, -hr * 0.3, -hr * 2.9, -hr * 0.1);
       hairG.fillTriangle(-hr * 0.9, -hr * 0.7, -hr * 2.9, -hr * 0.1, -hr * 2.4, hr * 0.7);
+    } else if (style === "short") {
+      hairG.fillCircle(0, -hr * 0.42, hr * 1.08);
+      hairG.fillTriangle(-hr * 0.95, -hr * 0.55, -hr * 0.35, -hr * 0.25, -hr * 0.78, hr * 0.25);
+      hairG.fillTriangle(-hr * 0.42, -hr * 0.62, hr * 0.04, -hr * 0.24, -hr * 0.16, hr * 0.16);
+      hairG.fillTriangle(hr * 0.14, -hr * 0.58, hr * 0.7, -hr * 0.24, hr * 0.46, hr * 0.2);
+    } else if (style === "tridents") {
+      hairG.fillCircle(0, -hr * 0.45, hr * 1.06);
+      for (let i = -1; i <= 1; i += 1) {
+        const x = i * hr * 0.55;
+        hairG.fillTriangle(x - 6, -hr * 1.0, x + 6, -hr * 1.0, x + i * 4, -hr * (2.2 - Math.abs(i) * 0.18));
+      }
     } else {
       hairG.fillCircle(0, -hr * 0.35, hr * 1.08);
       hairG.fillTriangle(-hr * 0.95, -hr * 0.4, -hr * 0.2, -hr * 0.2, -hr * 1.5, hr * 3.4);
@@ -228,7 +239,9 @@ export class FighterRig {
 
   private buildAccessory(accent: number, primary: number, secondary: number): void {
     const b = this.def.build;
-    if (this.def.accessory === "sword") {
+    const hasBlade = this.def.accessory === "sword" || this.def.accessory === "trisword";
+
+    if (hasBlade) {
       const sword = this.scene.add.container(0, b.armLength - 2);
       const guard = this.scene.add.rectangle(0, 2, 18, 4, accent, 1);
       const blade = this.scene.add.rectangle(0, 42, 5, 78, 0xeaf6ff, 1).setOrigin(0.5, 0.5);
@@ -241,6 +254,21 @@ export class FighterRig {
       this.register(blade, 0xeaf6ff, 1);
       this.register(guard, accent, 1);
     }
+
+    if (this.def.accessory === "trisword") {
+      // Two sheathed blades crossed behind the torso — the third is in hand.
+      for (const side of [-1, 1]) {
+        const sheath = this.scene.add.rectangle(side * 9, -b.torsoH * 0.5, 6, 88, 0x15251f, 1);
+        sheath.setRotation(side * 0.34);
+        const tip = this.scene.add.rectangle(-side * 13, -b.torsoH * 0.5 - 42, 5, 16, accent, 0.95);
+        tip.setRotation(side * 0.34);
+        this.upper.add(sheath);
+        this.upper.add(tip);
+        this.upper.sendToBack(tip);
+        this.upper.sendToBack(sheath);
+      }
+    }
+
     if (this.def.accessory === "bands") {
       const bandF = this.scene.add.ellipse(0, b.armLength - 6, b.armThickness + 8, 8, accent, 0.95);
       this.frontArm.add(bandF);
@@ -249,13 +277,46 @@ export class FighterRig {
       this.register(bandF, accent, 0.95);
       this.register(bandB, accent, 0.95);
     }
-    if (this.def.accessory === "sword") {
+
+    if (this.def.accessory === "headband") {
+      const r = b.headR;
+      const band = this.scene.add.rectangle(0, -r * 0.52, r * 1.92, 4, accent, 0.95);
+      const knot = this.scene.add.ellipse(-r * 0.98, -r * 0.52, 7, 7, accent, 1);
+      const tailA = this.scene.add.triangle(-r * 1.1, -r * 0.2, 0, 0, -18, 6, -9, 20, accent, 0.85);
+      const tailB = this.scene.add.triangle(-r * 1.1, -r * 0.2, 0, 0, -13, 12, -4, 24, accent, 0.7);
+      this.head.add(band);
+      this.head.add(knot);
+      this.head.add(tailA);
+      this.head.add(tailB);
+      this.register(band, accent, 0.95);
+      this.register(knot, accent, 1);
+    }
+
+    if (this.def.accessory === "goggles") {
+      const r = b.headR;
+      const strap = this.scene.add.rectangle(0, -r * 0.5, r * 1.94, 5, 0x141821, 1);
+      const lensL = this.scene.add.ellipse(-r * 0.38, -r * 0.5, r * 0.56, r * 0.44, accent, 0.92);
+      const lensR = this.scene.add.ellipse(r * 0.38, -r * 0.5, r * 0.56, r * 0.44, accent, 0.92);
+      const glintL = this.scene.add.ellipse(-r * 0.44, -r * 0.58, 3, 3, 0xffffff, 0.7).setBlendMode(Phaser.BlendModes.ADD);
+      const glintR = this.scene.add.ellipse(r * 0.32, -r * 0.58, 3, 3, 0xffffff, 0.7).setBlendMode(Phaser.BlendModes.ADD);
+      this.head.add(strap);
+      this.head.add(lensL);
+      this.head.add(lensR);
+      this.head.add(glintL);
+      this.head.add(glintR);
+      this.register(strap, 0x141821, 1);
+      this.register(lensL, accent, 0.92);
+      this.register(lensR, accent, 0.92);
+    }
+
+    if (hasBlade) {
       // coat tails
       const tail = this.scene.add.triangle(-6, -10, 0, 0, -14, 56, 10, 40, mix(primary, 0x000000, 0.35), 0.9);
       this.upper.add(tail);
       this.upper.sendToBack(tail);
       this.register(tail, mix(primary, 0x000000, 0.35), 0.9);
     }
+
     if (this.def.accessory === "cape" || this.def.accessory === "scarf") {
       // cloth is redrawn every frame; a base tone keeps it visible before the first update
       this.cloth.fillStyle(this.def.accessory === "cape" ? primary : accent, 0.85);
@@ -567,7 +628,15 @@ export class FighterRig {
   private drawCloth(f: RigFrame): void {
     const g = this.cloth;
     g.clear();
-    if (this.def.accessory === "bands" || this.def.accessory === "sword") return;
+    if (
+      this.def.accessory === "bands" ||
+      this.def.accessory === "sword" ||
+      this.def.accessory === "trisword" ||
+      this.def.accessory === "headband" ||
+      this.def.accessory === "goggles"
+    ) {
+      return;
+    }
 
     const cape = this.def.accessory === "cape";
     const b = this.def.build;

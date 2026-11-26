@@ -1,4 +1,4 @@
-export type FighterId = "kaze" | "helios" | "zuri" | "shiro";
+export type FighterId = "kaze" | "helios" | "zuri" | "shiro" | "kai" | "riko" | "sango";
 export type ArenaId = "dojo" | "capital";
 export type Difficulty = "easy" | "normal" | "hard";
 export type FighterSlot = "player" | "cpu";
@@ -51,7 +51,7 @@ export interface FighterBuild {
   legLength: number;
   headR: number;
   hipDrop: number;
-  hair: "spikes" | "crown" | "ponytail" | "long";
+  hair: "spikes" | "crown" | "ponytail" | "long" | "short" | "tridents";
 }
 
 export interface FighterColors {
@@ -70,12 +70,12 @@ export interface FighterDef {
   style: string;
   tagline: string;
   bio: string;
-  archetype: "Nimble" | "Heavy" | "Brawler" | "Swordsman";
+  archetype: "Nimble" | "Heavy" | "Brawler" | "Swordsman" | "Striker" | "Elastic" | "Ronin";
   colors: FighterColors;
   /** 1..10 presentation stats */
   stats: { health: number; power: number; speed: number };
   build: FighterBuild;
-  accessory: "scarf" | "cape" | "bands" | "sword";
+  accessory: "scarf" | "cape" | "bands" | "sword" | "headband" | "goggles" | "trisword";
   attacks: Record<AttackId, AttackDef>;
   specialName: string;
   superName: string;

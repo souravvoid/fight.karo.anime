@@ -1,6 +1,6 @@
 # ANIME CLASH: CROSSOVER ARENA
 
-An original 2D anime-inspired browser fighting game. Four fighters, two arenas, best-of-three rounds against a CPU opponent — built with React, TypeScript, Vite and Phaser 3.
+An original 2D anime-inspired browser fighting game. Seven fighters, two arenas, best-of-three rounds against a CPU opponent — built with React, TypeScript, Vite and Phaser 3.
 
 **Play:** https://anime-clash-crossover-arena.embarko.app/
 
@@ -19,7 +19,7 @@ An original 2D anime-inspired browser fighting game. Four fighters, two arenas, 
 
 ## Features
 
-- **4 original fighters** — Kaze (nimble), Helios (heavy), Zuri (brawler), Shiro (swordsman), each with their own frame data, reach, archetype stats, special and super.
+- **7 original fighters** — Kaze (nimble), Helios (heavy), Zuri (brawler), Shiro (swordsman), Kai (striker), Riko (elastic), Sango (ronin), each with their own frame data, reach, archetype stats, special and super.
 - **2 original arenas** — Shadow Dojo and Ruined Capital, both drawn procedurally with parallax, ambient particles and lighting.
 - **Real fighting-game mechanics** — startup/active/recovery frames, hitboxes and hurtboxes, hitstop, blockstun, hitstun, chip damage, knockback, launchers, unblockable supers, energy meter, combo counter.
 - **3 CPU difficulties** — Easy, Normal and Hard differ in reaction time, block rate, punish rate, anti-air rate and meter usage. The CPU only presses buttons a human can press.

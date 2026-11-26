@@ -444,9 +444,10 @@ export class BattleScene extends Phaser.Scene {
   }
 
   private updateProjectiles(dt: number): void {
-    const target = this.player;
     for (let i = this.projectiles.length - 1; i >= 0; i -= 1) {
       const p = this.projectiles[i];
+      // A projectile must check the owner's opponent, not always the player.
+      const target = p.owner === this.player ? this.cpu : this.player;
       const dts = dt / 1000;
       p.x += p.vx * dts;
       p.obj.setPosition(p.x, p.y);
