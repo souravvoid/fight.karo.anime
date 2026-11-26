@@ -1599,7 +1599,11 @@ kbd {
   inset: 0;
   z-index: 15;
   pointer-events: none;
-  --touch: clamp(46px, 10.5vw, 74px);
+  /* Size from the frame height, not the viewport width: in landscape a
+     width-based size makes the pads taller than the arena itself. */
+  --touch: clamp(44px, 11dvh, 58px);
+  --touch-gap: clamp(4px, 0.8vh, 8px);
+  --touch-inset: clamp(8px, 1.6vh, 16px);
 }
 
 .touch-btn {
@@ -1610,7 +1614,7 @@ kbd {
   border-radius: 50%;
   display: grid;
   place-items: center;
-  font-size: clamp(8px, 1.5vw, 11px);
+  font-size: clamp(8px, 1.4vh, 11px);
   font-weight: 900;
   letter-spacing: 0.06em;
   backdrop-filter: blur(3px);
@@ -1626,83 +1630,93 @@ kbd {
   transform: scale(0.94);
 }
 
+/* Two rows: jump centred above, then left / crouch / right. A real grid
+   keeps the buttons from overlapping each other. */
 .dpad {
   position: absolute;
-  left: clamp(10px, 2vw, 26px);
-  bottom: clamp(10px, 2vw, 26px);
-  width: calc(var(--touch) * 3);
-  height: calc(var(--touch) * 2.4);
+  left: max(var(--touch-inset), env(safe-area-inset-left));
+  bottom: max(var(--touch-inset), env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-columns: repeat(3, var(--touch));
+  grid-template-rows: repeat(2, var(--touch));
+  gap: var(--touch-gap);
+  width: max-content;
+  height: max-content;
 }
 
 .dpad .touch-btn {
-  position: absolute;
   width: var(--touch);
   height: var(--touch);
 }
 
-.dpad-left {
-  left: 0;
-  bottom: 0;
-  border-bottom-left-radius: 26px;
-}
-
-.dpad-right {
-  right: 0;
-  bottom: 0;
-  border-bottom-right-radius: 26px;
-}
-
 .dpad-up {
-  left: calc(var(--touch) * 0.5);
-  top: 0;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.dpad-left {
+  grid-column: 1;
+  grid-row: 2;
 }
 
 .dpad-down {
-  left: calc(var(--touch) * 0.5);
-  bottom: 0;
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.dpad-right {
+  grid-column: 3;
+  grid-row: 2;
 }
 
 .attack-pad {
   position: absolute;
-  right: clamp(10px, 2vw, 26px);
-  bottom: clamp(10px, 2vw, 26px);
+  right: max(var(--touch-inset), env(safe-area-inset-right));
+  bottom: max(var(--touch-inset), env(safe-area-inset-bottom));
   display: grid;
-  grid-template-columns: repeat(3, auto);
-  gap: clamp(5px, 1vw, 10px);
-  align-items: end;
-  justify-items: end;
+  grid-template-columns: repeat(3, var(--touch));
+  grid-template-rows: repeat(2, var(--touch));
+  gap: var(--touch-gap);
 }
 
 .attack-btn {
-  width: calc(var(--touch) * 0.92);
-  height: calc(var(--touch) * 0.92);
+  width: var(--touch);
+  height: var(--touch);
   border-radius: 50%;
-  font-size: clamp(7px, 1.3vw, 10px);
-}
-
-.attack-punch {
-  background: rgba(245, 181, 68, 0.28);
-  border-color: rgba(245, 181, 68, 0.6);
-}
-
-.attack-kick {
-  background: rgba(255, 106, 19, 0.28);
-  border-color: rgba(255, 106, 19, 0.6);
-}
-
-.attack-special {
-  background: rgba(249, 199, 79, 0.22);
-  border-color: rgba(249, 199, 79, 0.55);
+  font-size: clamp(7px, 1.3vh, 10px);
 }
 
 .attack-grab {
+  grid-column: 1;
+  grid-row: 1;
   background: rgba(255, 122, 26, 0.22);
   border-color: rgba(255, 122, 26, 0.55);
 }
 
+.attack-special {
+  grid-column: 2;
+  grid-row: 1;
+  background: rgba(249, 199, 79, 0.22);
+  border-color: rgba(249, 199, 79, 0.55);
+}
+
+.attack-kick {
+  grid-column: 3;
+  grid-row: 1;
+  background: rgba(255, 106, 19, 0.28);
+  border-color: rgba(255, 106, 19, 0.6);
+}
+
+.attack-punch {
+  grid-column: 2;
+  grid-row: 2;
+  background: rgba(245, 181, 68, 0.28);
+  border-color: rgba(245, 181, 68, 0.6);
+}
+
 .attack-super {
-  width: calc(var(--touch) * 1.12);
-  height: calc(var(--touch) * 1.12);
+  grid-column: 3;
+  grid-row: 2;
   background: radial-gradient(circle, rgba(232, 56, 79, 0.5), rgba(255, 106, 19, 0.35));
   border-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0 0 22px rgba(249, 199, 79, 0.35);
@@ -2445,5 +2459,13 @@ kbd {
 @media (orientation: portrait) and (max-width: 900px) {
   .rotate-hint {
     display: flex;
+  }
+}
+
+/* Phones and tablets have no keyboard strip under the arena, so let the
+   frame use the full height instead of reserving that space. */
+@media (pointer: coarse) {
+  .battle-frame {
+    width: min(100vw, calc(100dvh * 16 / 9));
   }
 }
