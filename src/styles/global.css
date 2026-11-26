@@ -132,7 +132,10 @@ ul {
   max-width: 1360px;
   min-height: 100dvh;
   margin: 0 auto;
-  padding: clamp(18px, 3.2vw, 42px);
+  padding: max(clamp(18px, 3.2vw, 42px), env(safe-area-inset-top))
+           max(clamp(18px, 3.2vw, 42px), env(safe-area-inset-right))
+           max(clamp(18px, 3.2vw, 42px), env(safe-area-inset-bottom))
+           max(clamp(18px, 3.2vw, 42px), env(safe-area-inset-left));
   display: flex;
   flex-direction: column;
   gap: clamp(18px, 2.6vw, 34px);
@@ -1117,7 +1120,10 @@ ul {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   gap: clamp(8px, 1.4vw, 22px);
-  padding: clamp(8px, 1.5vw, 20px) clamp(10px, 1.8vw, 24px);
+  padding: max(clamp(8px, 1.5vw, 20px), env(safe-area-inset-top))
+           max(clamp(10px, 1.8vw, 24px), env(safe-area-inset-right))
+           clamp(4px, 0.6vw, 8px)
+           max(clamp(10px, 1.8vw, 24px), env(safe-area-inset-left));
   align-items: start;
 }
 
