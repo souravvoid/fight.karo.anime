@@ -124,19 +124,31 @@ export class BattleScene extends Phaser.Scene {
     this.bindInput();
     this.beginRound(true);
 
-    battleControl.pause = () => {
-      if (this.scene.isActive()) this.scene.pause();
+    // These callbacks outlive the scene: React may invoke resume() while a new
+    // battle is still booting, after this scene has been destroyed and its
+    // ScenePlugin nulled. Guard the plugin and only clear our own handlers.
+    const pauseBattle = () => {
+      const sys = this.scene as Phaser.Scenes.ScenePlugin | null;
+      if (sys?.isActive()) sys.pause();
     };
-    battleControl.resume = () => {
-      if (this.scene.isPaused()) this.scene.resume();
+    const resumeBattle = () => {
+      const sys = this.scene as Phaser.Scenes.ScenePlugin | null;
+      if (sys?.isPaused()) sys.resume();
+    };
+    battleControl.pause = pauseBattle;
+    battleControl.resume = resumeBattle;
+
+    const releaseControl = () => {
+      if (battleControl.pause === pauseBattle) battleControl.pause = undefined;
+      if (battleControl.resume === resumeBattle) battleControl.resume = undefined;
     };
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-      battleControl.pause = undefined;
-      battleControl.resume = undefined;
+      releaseControl();
       this.projectiles.forEach((p) => p.obj.destroy(true));
       this.projectiles = [];
     });
+    this.events.once(Phaser.Scenes.Events.DESTROY, releaseControl);
 
     this.startedAt = performance.now();
     audio.gong();

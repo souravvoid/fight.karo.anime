@@ -30,6 +30,38 @@ test("menu flow reaches a live battle without console errors", async ({ page }) 
   expect(errors).toEqual([]);
 });
 
+test("quitting a match and starting another does not crash", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  page.on("console", (message) => {
+    if (message.type() === "error") errors.push(message.text());
+  });
+
+  async function startTraining(): Promise<void> {
+    await page.getByRole("button", { name: /enter the arena/i }).click();
+    await page.locator(".mode-card").nth(1).click();
+    await page.locator(".roster-card").nth(4).click();
+    await page.locator(".roster-card").nth(1).click();
+    await page.getByRole("button", { name: "START TRAINING", exact: true }).click();
+    await expect(page.locator("canvas")).toBeVisible();
+  }
+
+  await page.goto("/");
+  await startTraining();
+
+  await page.locator(".stage-pause").click();
+  await page.getByRole("button", { name: /quit to menu/i }).click();
+  await expect(page.getByRole("button", { name: /enter the arena/i })).toBeVisible();
+  await expect(page.locator("canvas")).toHaveCount(0);
+
+  // A second battle must mount a fresh Phaser game, not throw on a dead scene.
+  await startTraining();
+  await expect(page.locator("canvas")).toBeVisible();
+  await expect(page.locator(".hp-fill")).toHaveCount(2);
+
+  expect(errors).toEqual([]);
+});
+
 test("corrupted local saves fall back to defaults", async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem("anime-clash.settings.v1", '{"sfx":"yes","music":null}');
